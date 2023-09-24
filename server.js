@@ -25,6 +25,8 @@ app.use(express.json());
 // Middleware for parsing URL-encoded request bodies (if needed)
 app.use(express.urlencoded({ extended: true }));
 
+// landing route
+app.get('/', (req, res) => {res.status(200).send("Hello world!")});
 // Used the root router
 app.use("/api", router); // Add '/api' as a prefix to all routes
 // Use the global error handler middleware

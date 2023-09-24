@@ -25,3 +25,4 @@ build/
 # Ignore npm lockfiles
 package-lock.json
 yarn.lock
+.vercel

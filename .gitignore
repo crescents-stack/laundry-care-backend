@@ -1,0 +1,27 @@
+# Ignore node_modules directory
+node_modules/
+
+# Ignore log files
+*.log
+
+# Ignore environment files
+.env
+
+# Ignore VSCode directory
+.vscode/
+
+# Ignore macOS file metadata
+.DS_Store
+
+# Ignore editor configuration files
+.editorconfig
+.eslintrc.json
+.prettierrc.json
+
+# Ignore compiled code
+dist/
+build/
+
+# Ignore npm lockfiles
+package-lock.json
+yarn.lock

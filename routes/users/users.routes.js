@@ -9,11 +9,12 @@ const authTokenMiddleware = require('../../middlewares/users/auth.token.middlewa
 
 router.post('/register', checkRole("user"),register);
 router.post('/login', checkRole("user"), login);
+
 router.post('/forget-password', checkRole("user"), authTokenMiddleware, forgotPassword);
 router.post('/reset-password', checkRole("user"), authTokenMiddleware, resetPassword);
 router.put('/', checkRole("user"), authTokenMiddleware, updateUserData);
 router.delete('/', checkRole("user"), authTokenMiddleware, deleteAccount);
-router.get('/', checkRole("user"), authTokenMiddleware, deleteAccount);
+// router.get('/', checkRole("user"), authTokenMiddleware, deleteAccount);
 router.post('/verification', checkRole("user"), authTokenMiddleware, verification);
 
 // Define other user-related routes as needed

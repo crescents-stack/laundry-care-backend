@@ -10,7 +10,7 @@ const authTokenMiddleware = require('../../middlewares/users/auth.token.middlewa
 router.post('/register', checkRole("user"),register);
 
 // Route for user login
-router.post('/login', checkRole("user"), authTokenMiddleware, login);
+router.post('/login', checkRole("user"), login);
 router.post('/forget-password', checkRole("user"), authTokenMiddleware, forgotPassword);
 router.post('/reset-password', checkRole("user"), authTokenMiddleware, resetPassword);
 router.put('/', checkRole("user"), authTokenMiddleware, updateUserData);

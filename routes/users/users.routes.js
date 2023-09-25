@@ -6,10 +6,8 @@ const { resetPassword, forgotPassword, register, login, updateUserData, deleteAc
 const { checkRole } = require('../../middlewares/users/auth.role.middleware');
 const authTokenMiddleware = require('../../middlewares/users/auth.token.middleware');
 
-// Route for user registration
-router.post('/register', checkRole("user"),register);
 
-// Route for user login
+router.post('/register', checkRole("user"),register);
 router.post('/login', checkRole("user"), login);
 router.post('/forget-password', checkRole("user"), authTokenMiddleware, forgotPassword);
 router.post('/reset-password', checkRole("user"), authTokenMiddleware, resetPassword);

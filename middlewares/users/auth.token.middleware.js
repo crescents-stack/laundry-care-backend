@@ -8,7 +8,6 @@ const authTokenMiddleware = async (req, res, next) => {
   try {
     // Get the token from the request header
     const token = req.header("Authorization") || req.query.token;
-
     if (!token) {
       return res
         .status(401)
@@ -17,7 +16,6 @@ const authTokenMiddleware = async (req, res, next) => {
 
     // Verify the token
     const decoded = jwt.verify(token, config.secretKey);
-
     // Find the user based on the decoded user ID
     const user = await User.findById(decoded.userId);
 

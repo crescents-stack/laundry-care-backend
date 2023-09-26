@@ -157,7 +157,7 @@ exports.resetPassword = async (req, res) => {
 
 exports.verification = async (req, res) => {
   const token = req.query.token; // Assuming the token is sent as a URL parameter
-  
+
   try {
     // Verify the token
     const decoded = jwt.verify(token, config.secretKey); // Replace with your secret key
@@ -183,6 +183,34 @@ exports.verification = async (req, res) => {
   }
 };
 
+exports.verificationLatter = async (req, res) => {
+  try {
+    // user email
+    const {email, clientUrl} = req.body;
+
+    // Find the user based on the decoded token information
+    const user = await User.find({ email });
+
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    // Generate and send the email verification link
+    const emailVerificationToken = generateEmailVerificationToken(user[0]);
+    const emailVerificationLink = `${clientUrl}?token=${emailVerificationToken}`;
+
+    await sendEmail(
+      email,
+      "Email Verification",
+      `Click the following link to verify your email: ${emailVerificationLink}`
+    );
+
+    res.status(201).json({ message: "User registered successfully" });
+  } catch (err) {
+    console.error("Email verification error:", err);
+    res.status(401).send({ error: "Email verification failed" });
+  }
+};
 
 // Rest of the code (register, protected routes, etc.) remains unchanged
 

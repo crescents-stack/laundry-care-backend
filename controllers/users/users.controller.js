@@ -212,8 +212,6 @@ exports.verificationLatter = async (req, res) => {
   }
 };
 
-// Rest of the code (register, protected routes, etc.) remains unchanged
-
 // Password reset token generation (you need to implement this)
 function generatePasswordResetToken(user) {
   // Generate a JWT token with a short expiration time for password reset

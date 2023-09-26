@@ -274,7 +274,7 @@ async function scheduledAccountDeletion() {
   try {
     // Calculate the date 3 days ago
     const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+    threeDaysAgo.setDate(threeDaysAgo.getDate() - 1); // this 1 will be 3: here it used just in case of test
 
     // Find users with deletion requests older than 3 days
     const usersToDelete = await User.find({

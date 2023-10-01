@@ -20,6 +20,7 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ message: "User with this email already exists." });
     }
+
     // Check if the user already exists by phone
     const existingUserByPhone = await User.findOne({ phone });
     if (existingUserByPhone) {
@@ -27,6 +28,7 @@ exports.register = async (req, res) => {
         .status(400)
         .json({ message: "User with this phone already exists." });
     }
+
     // Check if the user already exists by NID
     const existingUserByNID = await User.findOne({ nid });
     if (existingUserByNID) {
@@ -122,7 +124,7 @@ exports.forgotPassword = async (req, res) => {
 
     // Generate and send the password reset link (you need to implement this)
     const passwordResetToken = generatePasswordResetToken(user);
-    const passwordResetLink = `https://yourwebsite.com/reset-password?token=${passwordResetToken}`;
+    const passwordResetLink = `${clientUrl}?token=${passwordResetToken}`;
 
     await sendEmail(
       email,

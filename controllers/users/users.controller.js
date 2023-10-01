@@ -14,11 +14,25 @@ exports.register = async (req, res) => {
     const { name, email, phone, nid, password, clientUrl } = req.body;
 
     // Check if the user already exists by email
-    const existingUser = await User.findOne({ email });
-    if (existingUser) {
+    const existingUserByEmail = await User.findOne({ email });
+    if (existingUserByEmail) {
       return res
         .status(400)
         .json({ message: "User with this email already exists." });
+    }
+    // Check if the user already exists by phone
+    const existingUserByPhone = await User.findOne({ phone });
+    if (existingUserByPhone) {
+      return res
+        .status(400)
+        .json({ message: "User with this phone already exists." });
+    }
+    // Check if the user already exists by NID
+    const existingUserByNID = await User.findOne({ nid });
+    if (existingUserByNID) {
+      return res
+        .status(400)
+        .json({ message: "User with this NID already exists." });
     }
 
     // Hash the password before saving it to the database
@@ -186,7 +200,7 @@ exports.verification = async (req, res) => {
 exports.verificationLatter = async (req, res) => {
   try {
     // user email
-    const {email, clientUrl} = req.body;
+    const { email, clientUrl } = req.body;
 
     // Find the user based on the decoded token information
     const user = await User.find({ email });

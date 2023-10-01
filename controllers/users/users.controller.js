@@ -112,7 +112,7 @@ exports.login = async (req, res) => {
 // Forgot Password: Send a password reset email
 exports.forgotPassword = async (req, res) => {
   try {
-    const { email } = req.body;
+    const { email, clientUrl } = req.body;
 
     // Find the user by email
     const user = await User.findOne({ email });
@@ -132,7 +132,7 @@ exports.forgotPassword = async (req, res) => {
       `Click the following link to reset your password: ${passwordResetLink}`
     );
 
-    res.status(200).json({ message: "Password reset email sent successfully" });
+    res.status(201).json({ message: "Password reset email sent successfully" });
   } catch (error) {
     console.error("Error in sending password reset email:", error);
     res.status(500).json({ message: "Internal server error" });
@@ -142,7 +142,8 @@ exports.forgotPassword = async (req, res) => {
 // Reset Password: Update the password after clicking the reset link
 exports.resetPassword = async (req, res) => {
   try {
-    const { token, newPassword } = req.body;
+    const { password } = req.body;
+    const token = req.query.token;
 
     // Decode the password reset token
     const decoded = jwt.verify(token, secretKey);
@@ -156,7 +157,7 @@ exports.resetPassword = async (req, res) => {
     }
 
     // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    const hashedPassword = await bcrypt.hash(password, 10);
 
     // Update the user's password
     user.password = hashedPassword;

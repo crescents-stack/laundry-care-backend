@@ -28,7 +28,6 @@ router.post("/verification-latter", checkRole("user"), verificationLatter);
 router.post(
   "/forget-password",
   checkRole("user"),
-  authTokenMiddleware,
   forgotPassword
 );
 router.post(

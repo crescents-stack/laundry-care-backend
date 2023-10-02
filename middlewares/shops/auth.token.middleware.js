@@ -17,7 +17,7 @@ const authTokenMiddleware = async (req, res, next) => {
     if (!shop) {
       return res.status(401).json({ message: "Shop not found" });
     }
-
+ 
     req.shop = shop;
     next();
   } catch (error) {

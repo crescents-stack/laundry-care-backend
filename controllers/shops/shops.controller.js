@@ -257,7 +257,7 @@ exports.deleteAccount = async (req, res) => {
     if (!deletedShop) {
       return res.status(404).json({ error: "Shop not found" });
     }
-
+ 
     res.status(200).json({ message: "Shop account deleted successfully" });
   } catch (error) {
     console.error("Error in deleting shop account:", error);

@@ -42,5 +42,5 @@ router.post(
 router.get('/', checkRole("shop"), authTokenMiddleware, getShopData);
 router.put("/", checkRole("shop"), authTokenMiddleware, updateShopData);
 router.delete("/delete", checkRole("shop"), authTokenMiddleware, deleteShopAccount);
-
+ 
 module.exports = router;

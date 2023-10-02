@@ -11,9 +11,9 @@ const {
   verification,
   verificationLetter,
   getShopData,
-} = require("../../controllers/shop/shop.controller");
+} = require("../../controllers/shops/shops.controller");
 const { checkRole } = require("../../middlewares/users/auth.role.middleware");
-const authTokenMiddleware = require("../../middlewares/shop/auth.token.middleware");
+const authTokenMiddleware = require("../../middlewares/shops/auth.token.middleware");
 
 router.post("/register", checkRole("shop"), register);
 router.post("/login", checkRole("shop"), login);

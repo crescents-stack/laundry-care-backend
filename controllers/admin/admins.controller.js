@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const Admin = require("../../models/admin/admin.model");
+const Admin = require("../../models/admin/admins.model");
 const { secretKey } = require("../../config/config");
 const { sendEmail } = require("../../utils/nodemailer.setup");
 const config = require("../../config/config");

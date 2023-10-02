@@ -1,5 +1,5 @@
 const jwt = require("jsonwebtoken");
-const Shop = require("../../models/shop/shop.model");
+const Shop = require("../../models/shops/shops.model");
 const config = require("../../config/config");
 
 const authTokenMiddleware = async (req, res, next) => {

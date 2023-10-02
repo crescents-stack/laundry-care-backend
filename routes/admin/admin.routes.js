@@ -11,9 +11,9 @@ const {
   verification,
   verificationLatter,
   getAdminData,
-} = require("../../controllers/admin/admin.controller");
+} = require("../../controllers/admin/admins.controller");
 const authTokenMiddleware = require("../../middlewares/admin/auth.token.middleware");
-const checkRole = require("../../middlewares/users/auth.role.middleware");
+const { checkRole } = require("../../middlewares/users/auth.role.middleware");
 
 router.post("/register", checkRole("admin"), register);
 router.post("/login", checkRole("admin"), login);

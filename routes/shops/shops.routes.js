@@ -29,7 +29,7 @@ router.post(
   verificationLatter
 );
 router.post(
-  "/forgot-password",
+  "/forget-password",
   checkRole("shop"),
   forgotPassword
 );

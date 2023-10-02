@@ -71,7 +71,7 @@ exports.register = async (req, res) => {
 // Email verification token generation
 function generateEmailVerificationToken(rider) {
   // Generate a JWT token with a short expiration time for email verification
-  return jwt.sign({ userId: rider._id }, secretKey, { expiresIn: "1h" });
+  return jwt.sign({ riderId: rider._id }, secretKey, { expiresIn: "1h" });
 }
 
 // Login a rider
@@ -93,7 +93,7 @@ exports.login = async (req, res) => {
     }
 
     // Generate a JWT token for authentication
-    const token = jwt.sign({ userId: rider._id, role: rider.role }, secretKey, {
+    const token = jwt.sign({ riderId: rider._id, role: rider.role }, secretKey, {
       expiresIn: "1h",
     });
 
@@ -137,7 +137,7 @@ exports.forgotPassword = async (req, res) => {
 // Password reset token generation
 function generatePasswordResetToken(rider) {
   // Generate a JWT token with a short expiration time for password reset
-  return jwt.sign({ userId: rider._id }, secretKey, { expiresIn: "1h" });
+  return jwt.sign({ riderId: rider._id }, secretKey, { expiresIn: "1h" });
 }
 
 // Reset Password: Update the password after clicking the reset link
@@ -150,7 +150,7 @@ exports.resetPassword = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
 
     // Find the rider by rider ID
-    const rider = await Rider.findById(decoded.userId);
+    const rider = await Rider.findById(decoded.riderId);
 
     // Check if the rider exists
     if (!rider) {
@@ -182,7 +182,7 @@ exports.verification = async (req, res) => {
     const decoded = jwt.verify(token, config.secretKey); // Replace with your secret key
 
     // Find the rider based on the decoded token information
-    const rider = await Rider.findById(decoded.userId);
+    const rider = await Rider.findById(decoded.riderId);
 
     if (!rider) {
       return res.status(404).json({ error: "Rider not found" });
@@ -241,7 +241,7 @@ exports.getRiderData = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
 
     // Find the rider by rider ID
-    const rider = await Rider.findById(decoded.userId);
+    const rider = await Rider.findById(decoded.riderId);
 
     // Check if the rider exists
     if (!rider) {
@@ -266,7 +266,7 @@ exports.updateRiderData = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
 
     // Find the rider by rider ID
-    const rider = await Rider.findById(decoded.userId);
+    const rider = await Rider.findById(decoded.riderId);
 
     // Check if the rider exists
     if (!rider) {
@@ -296,7 +296,7 @@ exports.deleteAccount = async (req, res) => {
     const decoded = jwt.verify(token, secretKey);
 
     // Find the rider by rider ID
-    const rider = await Rider.findById(decoded.userId);
+    const rider = await Rider.findById(decoded.riderId);
 
     // Check if the rider exists
     if (!rider) {

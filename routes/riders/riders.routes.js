@@ -24,9 +24,9 @@ router.post(
   authTokenMiddleware,
   verification
 );
-router.post("/verification-letter", checkRole("rider"), verificationLatter); // Update the route
+router.post("/verification-latter", checkRole("rider"), verificationLatter); // Update the route
 router.post(
-  "/forgot-password",
+  "/forget-password",
   checkRole("rider"),
   forgotPassword
 );

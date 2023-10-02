@@ -16,7 +16,7 @@ const authTokenMiddleware = async (req, res, next) => {
     const decoded = jwt.verify(token, config.secretKey);
     
     // Find the rider based on the decoded rider ID
-    const rider = await Rider.findById(decoded.userId);
+    const rider = await Rider.findById(decoded.riderId);
 
     if (!rider) {
       return res.status(401).json({ message: "Rider not found" });

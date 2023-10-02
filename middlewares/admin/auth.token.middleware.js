@@ -12,7 +12,7 @@ const authTokenMiddleware = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, config.secretKey);
-    const admin = await Admin.findById(decoded.userId);
+    const admin = await Admin.findById(decoded.adminId);
 
     if (!admin) {
       return res.status(401).json({ message: "Admin not found" });

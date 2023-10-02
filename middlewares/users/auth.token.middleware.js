@@ -7,7 +7,7 @@ const config = require("../../config/config");
 const authTokenMiddleware = async (req, res, next) => {
   try {
     // Get the token from the request header
-    const token = req.header("Authorization") || req.query.token;
+    const token = req.header("Authorization").slice(7) || req.query.token;
     if (!token) {
       return res
         .status(401)

@@ -71,8 +71,6 @@ exports.register = async (req, res) => {
   }
 };
 
-// Rest of the user controller functions (login, protected routes, etc.) remain unchanged
-
 // Email verification token generation (you need to implement this)
 function generateEmailVerificationToken(user) {
   // Generate a JWT token with a short expiration time for email verification
@@ -143,7 +141,7 @@ exports.forgotPassword = async (req, res) => {
 exports.resetPassword = async (req, res) => {
   try {
     const { password } = req.body;
-    const token = req.query.token;
+    const token = req.header("Authorization").slice(7);
 
     // Decode the password reset token
     const decoded = jwt.verify(token, secretKey);
@@ -173,7 +171,7 @@ exports.resetPassword = async (req, res) => {
 };
 
 exports.verification = async (req, res) => {
-  const token = req.query.token; // Assuming the token is sent as a URL parameter
+  const token = req.header("Authorization").slice(7);
 
   try {
     // Verify the token
@@ -238,10 +236,13 @@ function generatePasswordResetToken(user) {
 // Get user data by ID (protected route)
 exports.getUserData = async (req, res) => {
   try {
-    const userId = req.userId; // Extract user ID from JWT token
+    const token = req.header("Authorization").slice(7);
 
-    // Find the user by ID
-    const user = await User.findById(userId);
+    // Decode the password reset token
+    const decoded = jwt.verify(token, secretKey);
+
+    // Find the user by user ID
+    const user = await User.findById(decoded.userId);
 
     // Check if the user exists
     if (!user) {
@@ -258,11 +259,15 @@ exports.getUserData = async (req, res) => {
 // Update user data (protected route)
 exports.updateUserData = async (req, res) => {
   try {
-    const userId = req.userId; // Extract user ID from JWT token
-    const { name, email, phone, nid } = req.body;
+    const { name, address} = req.body;
 
-    // Find the user by ID
-    const user = await User.findById(userId);
+    const token = req.header("Authorization").slice(7);
+
+    // Decode the password reset token
+    const decoded = jwt.verify(token, secretKey);
+
+    // Find the user by user ID
+    const user = await User.findById(decoded.userId);
 
     // Check if the user exists
     if (!user) {
@@ -271,9 +276,7 @@ exports.updateUserData = async (req, res) => {
 
     // Update user data
     user.name = name;
-    user.email = email;
-    user.phone = phone;
-    user.nid = nid;
+    user.address = address;
 
     // Save the updated user to the database
     await user.save();
@@ -288,7 +291,7 @@ exports.updateUserData = async (req, res) => {
 // Delete user account (soft delete)
 exports.deleteAccount = async (req, res) => {
   try {
-    const token = req.query.token;
+    const token = req.header("Authorization").slice(7);
 
     // Decode the password reset token
     const decoded = jwt.verify(token, secretKey);
@@ -316,9 +319,3 @@ exports.deleteAccount = async (req, res) => {
     res.status(500).json({ message: "Internal server error" });
   }
 };
-
-// const scheduledAccountDeletion = (user) => {
-//   setTimeout(() => {
-
-//   }, 5000);
-// };

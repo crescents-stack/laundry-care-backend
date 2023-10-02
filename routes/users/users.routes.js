@@ -11,6 +11,7 @@ const {
   deleteAccount,
   verification,
   verificationLatter,
+  getUserData,
 } = require("../../controllers/users/users.controller");
 const { checkRole } = require("../../middlewares/users/auth.role.middleware");
 const authTokenMiddleware = require("../../middlewares/users/auth.token.middleware");
@@ -36,8 +37,8 @@ router.post(
   authTokenMiddleware,
   resetPassword
 );
+router.get('/', checkRole("user"), authTokenMiddleware, getUserData);
 router.put("/", checkRole("user"), authTokenMiddleware, updateUserData);
 router.delete("/delete", checkRole("user"), authTokenMiddleware, deleteAccount);
-// router.get('/', checkRole("user"), authTokenMiddleware, deleteAccount);
 
 module.exports = router;

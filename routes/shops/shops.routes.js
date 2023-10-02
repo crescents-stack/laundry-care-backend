@@ -24,7 +24,7 @@ router.post(
   verification
 );
 router.post(
-  "/verification-letter",
+  "/verification-latter",
   checkRole("shop"),
   verificationLatter
 );

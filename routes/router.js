@@ -5,12 +5,12 @@ const router = express.Router();
 const usersRouter = require('./users/users.routes');
 // const adminRouter = require('./admin/admin');
 // const shopsRouter = require('./shops/shopOwner');
-// const ridersRouter = require('./riders/rider');
+const ridersRouter = require('./riders/riders.routes');
 
 // Used the individual route files
 router.use('/users', usersRouter);
 // router.use('/admin', adminRouter);
 // router.use('/shops', shopsRouter);
-// router.use('/riders', ridersRouter);
+router.use('/riders', ridersRouter);
 
 module.exports = router;

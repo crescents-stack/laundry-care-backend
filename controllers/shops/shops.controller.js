@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Email is not verified" });
     }
 
-    const token = jwt.sign({ userId: shop._id, role: shop.role }, secretKey, {
+    const token = jwt.sign({ shopId: shop._id, role: shop.role }, secretKey, {
       expiresIn: "1h",
     });
 
@@ -122,7 +122,7 @@ exports.resetPassword = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const shop = await Shop.findById(decoded.userId);
+    const shop = await Shop.findById(decoded.shopId);
 
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" });
@@ -148,7 +148,7 @@ exports.verification = async (req, res) => {
   try {
     const decoded = jwt.verify(token, config.secretKey);
 
-    const shop = await Shop.findById(decoded.userId);
+    const shop = await Shop.findById(decoded.shopId);
 
     if (!shop) {
       return res.status(404).json({ error: "Shop not found" });
@@ -185,12 +185,20 @@ exports.verificationLatter = async (req, res) => {
       `Click the following link to verify your email: ${emailVerificationLink}`
     );
 
-    res.status(201).json({ message: "Email verification link sent successfully" });
+    res
+      .status(201)
+      .json({ message: "Email verification link sent successfully" });
   } catch (err) {
     console.error("Email verification error:", err);
     res.status(401).send({ error: "Email verification link sending failed" });
   }
 };
+
+// Email verification token generation (you need to implement this)
+function generateEmailVerificationToken(shop) {
+  // Generate a JWT token with a short expiration time for email verification
+  return jwt.sign({ shopId: shop._id }, secretKey, { expiresIn: "1h" });
+}
 
 // Get shop data by ID (protected route)
 exports.getShopData = async (req, res) => {
@@ -199,7 +207,7 @@ exports.getShopData = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const shop = await Shop.findById(decoded.userId);
+    const shop = await Shop.findById(decoded.shopId);
 
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" });
@@ -221,7 +229,7 @@ exports.updateShopData = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const shop = await Shop.findById(decoded.userId);
+    const shop = await Shop.findById(decoded.shopId);
 
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" });
@@ -246,7 +254,7 @@ exports.deleteAccount = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const shop = await Shop.findById(decoded.userId);
+    const shop = await Shop.findById(decoded.shopId);
 
     if (!shop) {
       return res.status(404).json({ message: "Shop not found" });
@@ -257,7 +265,7 @@ exports.deleteAccount = async (req, res) => {
     if (!deletedShop) {
       return res.status(404).json({ error: "Shop not found" });
     }
- 
+
     res.status(200).json({ message: "Shop account deleted successfully" });
   } catch (error) {
     console.error("Error in deleting shop account:", error);
@@ -267,5 +275,5 @@ exports.deleteAccount = async (req, res) => {
 
 // Password reset token generation (you need to implement this)
 function generatePasswordResetToken(shop) {
-  return jwt.sign({ userId: shop._id }, secretKey, { expiresIn: "1h" });
+  return jwt.sign({ shopId: shop._id }, secretKey, { expiresIn: "1h" });
 }

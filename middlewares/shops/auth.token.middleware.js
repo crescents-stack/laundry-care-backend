@@ -12,7 +12,7 @@ const authTokenMiddleware = async (req, res, next) => {
     }
 
     const decoded = jwt.verify(token, config.secretKey);
-    const shop = await Shop.findById(decoded.userId);
+    const shop = await Shop.findById(decoded.shopId);
 
     if (!shop) {
       return res.status(401).json({ message: "Shop not found" });

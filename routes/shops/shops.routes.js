@@ -7,10 +7,10 @@ const {
   register,
   login,
   updateShopData,
-  deleteShopAccount,
   verification,
-  verificationLetter,
+  verificationLatter,
   getShopData,
+  deleteAccount,
 } = require("../../controllers/shops/shops.controller");
 const { checkRole } = require("../../middlewares/users/auth.role.middleware");
 const authTokenMiddleware = require("../../middlewares/shops/auth.token.middleware");
@@ -26,7 +26,7 @@ router.post(
 router.post(
   "/verification-letter",
   checkRole("shop"),
-  verificationLetter
+  verificationLatter
 );
 router.post(
   "/forgot-password",
@@ -41,6 +41,6 @@ router.post(
 );
 router.get('/', checkRole("shop"), authTokenMiddleware, getShopData);
 router.put("/", checkRole("shop"), authTokenMiddleware, updateShopData);
-router.delete("/delete", checkRole("shop"), authTokenMiddleware, deleteShopAccount);
+router.delete("/delete", checkRole("shop"), authTokenMiddleware, deleteAccount);
  
 module.exports = router;

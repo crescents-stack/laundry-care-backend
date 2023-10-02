@@ -28,7 +28,7 @@ const shopSchema = new mongoose.Schema({
   role: {
     type: String,
     enum: ["user", "shop", "rider", "admin"],
-    default: "shop", // Default role is "shop" for Shop entity
+    default: "shop", 
   },
   createdAt: {
     type: Date,

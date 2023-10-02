@@ -1,5 +1,3 @@
-// userSchema.js
-
 const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
@@ -34,7 +32,7 @@ const userSchema = new mongoose.Schema({
   },
   createdAt: {
     type: Date,
-    default: Date.now, // Automatically set to the current date and time when a user is created
+    default: Date.now,
   },
   address: {
     type: String,

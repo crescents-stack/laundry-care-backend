@@ -8,12 +8,12 @@ const {
   register,
   login,
   updateRiderData,
-  deleteRiderAccount,
   verification,
-  verificationLetter,
+  verificationLatter,
   getRiderData,
+  deleteAccount,
 } = require("../../controllers/riders/riders.controller"); // Update the controller imports
-const { checkRole } = require("../../middlewares/riders/auth.role.middleware"); // Update the middleware import
+const { checkRole } = require("../../middlewares/users/auth.role.middleware"); // Update the middleware import
 const authTokenMiddleware = require("../../middlewares/riders/auth.token.middleware"); // Update the middleware import
 
 router.post("/register", checkRole("rider"), register); // Update the role to "rider"
@@ -24,7 +24,7 @@ router.post(
   authTokenMiddleware,
   verification
 );
-router.post("/verification-letter", checkRole("rider"), verificationLetter); // Update the route
+router.post("/verification-letter", checkRole("rider"), verificationLatter); // Update the route
 router.post(
   "/forgot-password",
   checkRole("rider"),
@@ -38,6 +38,6 @@ router.post(
 );
 router.get("/", checkRole("rider"), authTokenMiddleware, getRiderData); // Update the route
 router.put("/", checkRole("rider"), authTokenMiddleware, updateRiderData); // Update the route
-router.delete("/delete", checkRole("rider"), authTokenMiddleware, deleteRiderAccount); // Update the route
+router.delete("/delete", checkRole("rider"), authTokenMiddleware, deleteAccount); // Update the route
 
 module.exports = router;

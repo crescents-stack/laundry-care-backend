@@ -37,7 +37,7 @@ router.post(
   resetPassword
 );
 router.put("/", checkRole("user"), authTokenMiddleware, updateUserData);
-router.delete("/", checkRole("user"), authTokenMiddleware, deleteAccount);
+router.delete("/delete", checkRole("user"), authTokenMiddleware, deleteAccount);
 // router.get('/', checkRole("user"), authTokenMiddleware, deleteAccount);
 
 module.exports = router;

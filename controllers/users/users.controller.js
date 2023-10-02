@@ -288,59 +288,37 @@ exports.updateUserData = async (req, res) => {
 // Delete user account (soft delete)
 exports.deleteAccount = async (req, res) => {
   try {
-    const userId = req.userId; // Extract user ID from JWT token
+    const token = req.query.token;
 
-    // Find the user by ID
-    const user = await User.findById(userId);
+    // Decode the password reset token
+    const decoded = jwt.verify(token, secretKey);
+
+    // Find the user by user ID
+    const user = await User.findById(decoded.userId);
 
     // Check if the user exists
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    // Update the user's account deletion request timestamp
-    user.accountDeletionRequestedAt = Date.now();
-    await user.save();
+    // Find the user by ID and remove it from the database
+    const deletedUser = await User.findByIdAndRemove(user._id);
 
-    // Send a confirmation email for account deletion (you need to implement this)
-    await sendAccountDeletionConfirmationEmail(user.email);
+    if (!deletedUser) {
+      // If the user doesn't exist, return a 404 response
+      return res.status(404).json({ error: "User not found" });
+    }
 
-    res.status(200).json({ message: "Account deletion request received" });
+    // Respond with a success message
+    res.status(200).json({ message: "Account deleted successfully" });
   } catch (error) {
     console.error("Error in deleting user account:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };
 
-// Scheduled function to permanently delete accounts older than 3 days
-async function scheduledAccountDeletion() {
-  try {
-    // Calculate the date 3 days ago
-    const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 1); // this 1 will be 3: here it used just in case of test
+// const scheduledAccountDeletion = (user) => {
+//   setTimeout(() => {
 
-    // Find users with deletion requests older than 3 days
-    const usersToDelete = await User.find({
-      accountDeletionRequestedAt: { $lt: threeDaysAgo },
-      isDeleted: false, // Check if the user account is not already deleted
-    });
-
-    // Delete the user accounts
-    for (const user of usersToDelete) {
-      // You can add additional logic here if needed
-      // For example, sending a notification before deletion
-
-      // Mark the user as deleted and save changes
-      user.isDeleted = true;
-      await user.save();
-
-      // Perform the actual deletion from the database
-      await user.remove();
-    }
-  } catch (error) {
-    console.error("Error in scheduled account deletion:", error);
-  }
-}
-
-// Schedule the account deletion function to run periodically (e.g., daily)
-setInterval(scheduledAccountDeletion, 24 * 60 * 60 * 1000); // Run every 24 hours
+//   }, 5000);
+// };

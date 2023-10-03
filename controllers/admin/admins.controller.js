@@ -76,7 +76,7 @@ exports.login = async (req, res) => {
       return res.status(401).json({ message: "Email is not verified" });
     }
 
-    const token = jwt.sign({ userId: admin._id, role: admin.role }, secretKey, {
+    const token = jwt.sign({ adminId: admin._id, role: admin.role }, secretKey, {
       expiresIn: "1h",
     });
 
@@ -122,7 +122,7 @@ exports.resetPassword = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const admin = await Admin.findById(decoded.userId);
+    const admin = await Admin.findById(decoded.adminId);
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
@@ -147,7 +147,7 @@ exports.verification = async (req, res) => {
   try {
     const decoded = jwt.verify(token, config.secretKey);
 
-    const admin = await Admin.findById(decoded.userId);
+    const admin = await Admin.findById(decoded.adminId);
 
     if (!admin) {
       return res.status(404).json({ error: "Admin not found" });
@@ -197,7 +197,7 @@ exports.getAdminData = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const admin = await Admin.findById(decoded.userId);
+    const admin = await Admin.findById(decoded.adminId);
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
@@ -219,7 +219,7 @@ exports.updateAdminData = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const admin = await Admin.findById(decoded.userId);
+    const admin = await Admin.findById(decoded.adminId);
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
@@ -244,7 +244,7 @@ exports.deleteAccount = async (req, res) => {
 
     const decoded = jwt.verify(token, secretKey);
 
-    const admin = await Admin.findById(decoded.userId);
+    const admin = await Admin.findById(decoded.adminId);
 
     if (!admin) {
       return res.status(404).json({ message: "Admin not found" });
@@ -265,10 +265,10 @@ exports.deleteAccount = async (req, res) => {
 
 // Password reset token generation (you need to implement this)
 function generatePasswordResetToken(admin) {
-  return jwt.sign({ userId: admin._id }, secretKey, { expiresIn: "1h" });
+  return jwt.sign({ adminId: admin._id }, secretKey, { expiresIn: "1h" });
 }
 
 // Email verification token generation (you need to implement this)
 function generateEmailVerificationToken(admin) {
-  return jwt.sign({ userId: admin._id }, secretKey, { expiresIn: "1h" });
+  return jwt.sign({ adminId: admin._id }, secretKey, { expiresIn: "1h" });
 }

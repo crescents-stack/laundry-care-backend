@@ -1,6 +1,5 @@
 const MakePaymentIntendWithAmount = require("../config/stripe");
 
-
 exports.GetSecret = async (req, res) => {
   try {
     const intent = await MakePaymentIntendWithAmount(req.body.amount || 0);
@@ -11,7 +10,7 @@ exports.GetSecret = async (req, res) => {
     }
     res.status(200).send({
       message: "Successfully generated Client Secret",
-      client_secret: intent.client_secret
+      client_secret: intent.client_secret,
     });
   } catch (error) {
     res.status(500).send({

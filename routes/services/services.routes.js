@@ -1,6 +1,5 @@
 const express = require("express");
 const authTokenMiddlewareAdmin = require("../../middlewares/admin/auth.token.middleware");
-// const authTokenMiddlewareUsers = require("../../middlewares/users/auth.token.middleware");
 const {
   createService,
   getServices,

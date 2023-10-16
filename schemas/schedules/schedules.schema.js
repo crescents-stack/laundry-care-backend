@@ -5,12 +5,10 @@ const ScheduleSchema = new mongoose.Schema({
     {
       _id: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "Shops",
+        ref: "Services",
         required: true,
       },
       service: { type: String, required: true },
-      price: { type: Number, required: true },
-      description: { type: String, required: true },
     },
   ],
   shop: {
@@ -20,15 +18,21 @@ const ScheduleSchema = new mongoose.Schema({
     address: { type: String, required: true },
   },
   rider: {
-    _id: { type: mongoose.Schema.Types.ObjectId, ref: "Shops", required: true },
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: "Riders", required: true },
+    name: { type: String, required: true },
+    phone: { type: String, required: true },
+    message: { type: String, required: true },
+  },
+  user: {
+    _id: { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
     name: { type: String, required: true },
     phone: { type: String, required: true },
   },
-  collection: {
+  collect: {
     date: { type: String, required: true },
     time: { type: String, required: true },
   },
-  delivery: {
+  deliver: {
     date: { type: String, required: true },
     time: { type: String, required: true },
   },

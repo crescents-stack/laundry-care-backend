@@ -27,6 +27,7 @@ const ScheduleSchema = new mongoose.Schema({
     _id: { type: mongoose.Schema.Types.ObjectId, ref: "Users", required: true },
     name: { type: String, required: true },
     phone: { type: String, required: true },
+    address: { type: String, required: true }
   },
   collect: {
     date: { type: String, required: true },

@@ -40,7 +40,7 @@ exports.getSchedules = async (req, res) => {
 
 exports.updateSchedule = async (req, res) => {
   try {
-    const newSchedule = await ScheduleModel.find({ _id: req.params._id });
+    const newSchedule = await ScheduleModel.find({ _id: req.body._id });
     if (!newSchedule.length) {
       res.status(404).send({
         message: "No schedule found!",
@@ -48,7 +48,7 @@ exports.updateSchedule = async (req, res) => {
     }
     const updatedSchedule = await ScheduleModel.updateOne(
       {
-        _id: req.params._id,
+        _id: req.body._id,
       },
       req.body
     );

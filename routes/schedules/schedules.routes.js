@@ -18,7 +18,8 @@ SchedulesRoute.get("/user", authTokenMiddlewareUsers, checkRole("user"), getSche
 SchedulesRoute.get("/rider", authTokenMiddlewareRider, checkRole("rider"), getSchedules);
 SchedulesRoute.get("/shop", authTokenMiddlewareShop, checkRole("shop"), getSchedules);
 SchedulesRoute.get("/admin", authTokenMiddlewareAdmin, checkRole("admin"), getSchedules);
-SchedulesRoute.put("/", authTokenMiddlewareShop, updateSchedule);
+SchedulesRoute.put("/shop", authTokenMiddlewareShop, updateSchedule);
+SchedulesRoute.put("/user", authTokenMiddlewareUsers, updateSchedule);
 SchedulesRoute.delete("/", deleteSchedule);
 
 
